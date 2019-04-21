@@ -1,1 +1,30 @@
 library(dplyr)
+library(ggplot2)
+library(GGally)
+data.set <- read.csv("iris_data.csv")
+setosa.set <- filter(data.set, Species == "setosa")
+versicolor.set <- filter(data.set, Species == "versicolor")
+virginica.set <- filter(data.set, Species == "virginica")
+
+sink("irisdata_summary.txt", append = F, split = F)
+Grand_summary <- summary(data.set)
+Setosa_summary <- summary(setosa.set)
+Versicolor_summary <- summary(versicolor.set)
+Virginica_summary <- summary(virginica.set)
+print("Grand Summary")
+print(Grand_summary)
+print("Setosa Summary")
+print(Setosa_summary)
+print("Versicolor Summary")
+print(Versicolor_summary)
+print("Virginica Summary")
+print(Virginica_summary)
+sink()
+
+pdf("Iris Graphs.pdf")
+print(ggpairs(data.set[,2:5], mapping = aes(col = data.set$Species, alpha = 0.2)))
+dev.off()
+
+data.set %>%
+  group_by(Species) %>%
+  summarize()
